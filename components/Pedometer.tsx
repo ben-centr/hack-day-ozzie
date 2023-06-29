@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type PedometerAvailable = "true" | "false" | "checking";
+//type PedometerAvailable = "true" | "false" | "checking";
 
 interface PedometerComponentProps {
   steps: number;
@@ -50,25 +50,31 @@ interface PedometerComponentProps {
 }
 
 const PedometerComponent = ({ steps, setSteps }: PedometerComponentProps) => {
-  const [isPedometerAvailable, setIsPedometerAvailable] =
-    useState<PedometerAvailable>("checking");
-  const [isPedometerPermissioned, setIsPedometerPermissioned] =
-    useState<PermissionResponse | null>(null);
+  
+  //const [isPedometerAvailable, setIsPedometerAvailable] =
+  //  useState<PedometerAvailable>("checking");
+  //const [isPedometerPermissioned, setIsPedometerPermissioned] =
+  //  useState<PermissionResponse | null>(null);
+  
   const subscription = useRef<Subscription | null>(null);
 
-  const subscribe = async () => {
-    const isAvailable = await Pedometer.isAvailableAsync();
-    setIsPedometerAvailable(String(isAvailable) as "true" | "false");
+  const subscribe = () => {
+    
+    //const isAvailable = await Pedometer.isAvailableAsync();
+    //setIsPedometerAvailable(String(isAvailable) as "true" | "false");
 
-    if (isAvailable) {
+   // if (isAvailable) {
+      /*
       if (isPedometerPermissioned === null) {
         const permission = await Pedometer.requestPermissionsAsync();
         setIsPedometerPermissioned(permission);
       }
+      */
+
       subscription.current = Pedometer.watchStepCount((result) => {
         setSteps(result.steps);
       });
-    }
+    //}
   };
 
   useEffect(() => {
