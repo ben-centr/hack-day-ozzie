@@ -3,7 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { Game } from "./components/Game";
 import Pedometer from "./components/Pedometer";
 import { useKoala } from "./hooks/useKoala";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useInterpolatedState } from "./hooks/useInterpolatedState";
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 export default function App() {
-  const [currentStepCount, setCurrentStepCount] = useState(0);
+  const [currentStepCount, setCurrentStepCount] = useInterpolatedState(0);
   const {
     asset: koala,
     nextKoala,
@@ -23,14 +24,9 @@ export default function App() {
   } = useKoala({ steps: currentStepCount });
 
   const updateSteps = (steps: number) => {
-    const interval = setInterval(() => {
-      setCurrentStepCount((prev) => prev + 1);
-      nextKoala();
-    }, 300);
-
-    if (currentStepCount > steps - 1) {
-      clearInterval(interval);
-    }
+    console.log(`Increasing to ${steps} `);
+    setCurrentStepCount(steps);
+    nextKoala();
   };
 
   return (

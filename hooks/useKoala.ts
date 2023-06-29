@@ -1,7 +1,7 @@
 import { useAssets } from "expo-asset";
 import { useState } from "react";
 
-const KOALA_SIZE_MULTIPLIER = 0.02;
+const KOALA_SIZE_MULTIPLIER = 0.01;
 
 interface UseKoalaArgs {
   steps: number;
