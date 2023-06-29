@@ -2,22 +2,23 @@ import { useAssets } from "expo-asset";
 import { useState, useEffect } from "react";
 
 export const useKoala = () => {
+  const [koalaIdx, setKoalaIdx] = useState(0);
   const [assets, error] = useAssets([
     require("../assets/koala-right.png"),
     require("../assets/koala-left.png"),
   ]);
 
-  const [koalaIdx, setKoalaIdx] = useState(0);
+  if (error) {
+    console.error(error);
+  }
 
-  useEffect(() => {
-    const swapKoala = () => {
-      setKoalaIdx((idx) => (idx + 1) % 2);
-    };
+  const nextKoala = () => {
+    setKoalaIdx((idx) => (idx + 1) % 2);
+    console.log("nextkoala");
+  };
 
-    const interval = setInterval(swapKoala, 700);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return assets?.[koalaIdx];
+  return {
+    asset: assets?.[koalaIdx],
+    nextKoala,
+  };
 };
