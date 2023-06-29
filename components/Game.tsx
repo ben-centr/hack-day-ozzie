@@ -12,7 +12,7 @@ import { Koala } from "./Koala";
 import { Particles } from "./Particles";
 
 const PARTICLE_TTL = 2000;
-const PARTICLE_SPEED = 1;
+const PARTICLE_SPEED = 3;
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -104,19 +104,19 @@ export const Game = ({ koalaAsset, koalaSize }: GameProps) => {
       });
     };
 
-    const interval = setInterval(updateParticles, 50);
+    const interval = setInterval(updateParticles, 20);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <GameLoop style={styles.outerContainer} onUpdate={handleGameUpdate}>
       <Background />
-      <Particles particles={particles} />
       <Koala
         asset={koalaAsset}
         position={koalaPosition}
         sizeMultiplier={koalaSize}
       />
+      <Particles particles={particles} />
     </GameLoop>
   );
 };
