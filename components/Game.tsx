@@ -9,6 +9,7 @@ import {
 import uuid from "react-native-uuid";
 import { Particle as ParticleType, Position } from "../types";
 import { Particles } from "./Particles";
+import { Koala } from "./Koala";
 
 const PARTICLE_TTL = 2000;
 const PARTICLE_SPEED = 1;
@@ -18,11 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "relative",
     backgroundColor: "lightblue",
-  },
-  koala: {
-    position: "absolute",
-    width: 100,
-    height: 100,
   },
   background: {
     position: "absolute",
@@ -37,8 +33,6 @@ interface GameProps {
 }
 
 export const Game = ({ koalaAsset }: GameProps) => {
-  const [assets] = useAssets([require("../assets/background.png")]);
-
   const [koalaPosition, setKoalaPosition] = useState<Position>({
     x: 150,
     y: 250,
@@ -61,7 +55,7 @@ export const Game = ({ koalaAsset }: GameProps) => {
     });
   };
 
-  const updateHandler = ({ touches }: GameLoopUpdateEventOptionType) => {
+  const handleGameUpdate = ({ touches }: GameLoopUpdateEventOptionType) => {
     let press = touches.find((x) => x.type === "press");
     if (press) {
       addParticle({
@@ -112,18 +106,17 @@ export const Game = ({ koalaAsset }: GameProps) => {
   }, []);
 
   return (
-    <GameLoop style={styles.outerContainer} onUpdate={updateHandler}>
-      <Image
-        style={styles.background}
-        source={assets?.[0]}
-        contentFit="cover"
-      />
+    <GameLoop style={styles.outerContainer} onUpdate={handleGameUpdate}>
+      <Background />
       <Particles particles={particles} />
-      <Image
-        style={{ left: koalaPosition.x, top: koalaPosition.y, ...styles.koala }}
-        source={koalaAsset}
-        contentFit="contain"
-      />
+      <Koala asset={koalaAsset} position={koalaPosition} />
     </GameLoop>
+  );
+};
+
+const Background = () => {
+  const [assets] = useAssets([require("../assets/background.png")]);
+  return (
+    <Image style={styles.background} source={assets?.[0]} contentFit="cover" />
   );
 };

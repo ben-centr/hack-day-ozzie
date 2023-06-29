@@ -14,7 +14,6 @@ export const useKoala = () => {
 
   const nextKoala = () => {
     setKoalaIdx((idx) => (idx + 1) % 2);
-    console.log("nextkoala");
   };
 
   return {
