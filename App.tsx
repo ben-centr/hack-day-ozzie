@@ -23,9 +23,13 @@ export default function App() {
   } = useKoala({ steps: currentStepCount });
 
   const updateSteps = (steps: number) => {
-    setCurrentStepCount(steps);
-    if (steps > currentStepCount) {
+    const interval = setInterval(() => {
+      setCurrentStepCount((prev) => prev + 1);
       nextKoala();
+    }, 300);
+
+    if (currentStepCount > steps - 1) {
+      clearInterval(interval);
     }
   };
 
