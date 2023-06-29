@@ -1,7 +1,7 @@
 import { Asset } from "expo-asset";
 import { Image } from "expo-image";
-import { Position } from "../types";
 import { StyleSheet } from "react-native";
+import { Position } from "../types";
 
 const styles = StyleSheet.create({
   koala: {

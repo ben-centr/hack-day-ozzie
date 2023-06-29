@@ -1,5 +1,5 @@
 import { useAssets } from "expo-asset";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const KOALA_SIZE_MULTIPLIER = 0.02;
 

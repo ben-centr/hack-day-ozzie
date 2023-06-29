@@ -8,8 +8,8 @@ import {
 } from "react-native-game-engine";
 import uuid from "react-native-uuid";
 import { Particle as ParticleType, Position } from "../types";
-import { Particles } from "./Particles";
 import { Koala } from "./Koala";
+import { Particles } from "./Particles";
 
 const PARTICLE_TTL = 2000;
 const PARTICLE_SPEED = 1;
