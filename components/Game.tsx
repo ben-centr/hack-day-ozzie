@@ -1,4 +1,4 @@
-import { useAssets } from "expo-asset";
+import { Asset, useAssets } from "expo-asset";
 import { Image } from "expo-image";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -32,8 +32,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Game = () => {
-  const { asset: koala, nextKoala } = useKoala();
+interface GameProps {
+  koalaAsset: Asset;
+}
+
+export const Game = ({ koalaAsset }: GameProps) => {
   const [assets] = useAssets([require("../assets/background.png")]);
 
   const [koalaPosition, setKoalaPosition] = useState<Position>({
@@ -52,6 +55,7 @@ export const Game = () => {
           initializedDate: new Date().getTime(),
           opacity: 1,
           position,
+          assetIdx: Math.floor(Math.random() * 2),
         },
       ];
     });
@@ -60,7 +64,6 @@ export const Game = () => {
   const updateHandler = ({ touches }: GameLoopUpdateEventOptionType) => {
     let press = touches.find((x) => x.type === "press");
     if (press) {
-      // nextKoala();
       addParticle({
         x: press.event.pageX,
         y: press.event.pageY,
@@ -118,7 +121,7 @@ export const Game = () => {
       <Particles particles={particles} />
       <Image
         style={{ left: koalaPosition.x, top: koalaPosition.y, ...styles.koala }}
-        source={koala}
+        source={koalaAsset}
         contentFit="contain"
       />
     </GameLoop>

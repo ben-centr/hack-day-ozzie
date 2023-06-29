@@ -7,7 +7,10 @@ interface ParticlesProps {
 }
 
 export const Particles = ({ particles }: ParticlesProps) => {
-  const [assets] = useAssets([require("../assets/centr-logo-ozzie.png")]);
+  const [assets] = useAssets([
+    require("../assets/centr-logo-ozzie.png"),
+    require("../assets/chris-small.png"),
+  ]);
 
   return (
     <>
@@ -22,7 +25,7 @@ export const Particles = ({ particles }: ParticlesProps) => {
             width: 30,
             height: 30,
           }}
-          source={assets?.[0]}
+          source={assets?.[particle.assetIdx]}
           contentFit="contain"
         />
       ))}

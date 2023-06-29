@@ -8,4 +8,5 @@ export interface Particle {
   position: Position;
   opacity: number;
   initializedDate: number;
+  assetIdx: number;
 }

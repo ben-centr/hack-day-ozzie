@@ -13,30 +13,47 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   stepsContainer: {
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    gap: 20,
   },
   stepsText: {
-    fontSize: 20,
+    fontSize: 40,
   },
   stepsValue: {
-    fontSize: 30,
+    fontSize: 60,
     fontWeight: "bold",
     color: "rgb(129 140 248)",
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingRight: 10,
+    paddingLeft: 10,
+    textAlign: "center",
+    shadowColor: "blue",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
   },
 });
 
 type PedometerAvailable = "true" | "false" | "checking";
 
-const PedometerComponent = () => {
+interface PedometerComponentProps {
+  onStep: () => void;
+}
+
+const PedometerComponent = ({ onStep }: PedometerComponentProps) => {
   const [isPedometerAvailable, setIsPedometerAvailable] =
     useState<PedometerAvailable>("checking");
   const [isPedometerPermissioned, setIsPedometerPermissioned] =
     useState<PermissionResponse | null>(null);
-  const [currentStepCount, setCurrentStepCount] = useState<number | null>(null);
+  const [currentStepCount, setCurrentStepCount] = useState(0);
   const subscription = useRef<Subscription | null>(null);
 
   const subscribe = async () => {
@@ -49,8 +66,10 @@ const PedometerComponent = () => {
         setIsPedometerPermissioned(permission);
       }
       subscription.current = Pedometer.watchStepCount((result) => {
-        console.log("pedometer live step", result.steps);
         setCurrentStepCount(result.steps);
+        if (result.steps > currentStepCount) {
+          onStep();
+        }
       });
     }
   };
@@ -62,16 +81,6 @@ const PedometerComponent = () => {
 
   return (
     <View style={styles.container}>
-      <Text>
-        The pedometer is{" "}
-        {isPedometerAvailable === "true"
-          ? "available!"
-          : isPedometerAvailable === "false"
-          ? "not available :("
-          : "checking for availability..."}
-      </Text>
-
-      <Text>Permissions have been {isPedometerPermissioned?.status}</Text>
       <View style={styles.stepsContainer}>
         <Text style={styles.stepsText}>You have done</Text>
         <Text style={styles.stepsValue}>
