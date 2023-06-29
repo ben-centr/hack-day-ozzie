@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 
 const STEP_VALUE = 1;
+const STEP_DELAY = 350;
+
 export const useInterpolatedState = (initialValue: number) => {
   const [state, setState] = useState(initialValue);
   const latestValueRef = useRef(state);
@@ -32,7 +34,7 @@ export const useInterpolatedState = (initialValue: number) => {
 
           return prevValue + STEP_VALUE;
         });
-      }, 350);
+      }, STEP_DELAY);
 
       return () => {
         if (intervalRef.current) {
@@ -43,5 +45,5 @@ export const useInterpolatedState = (initialValue: number) => {
     }
   };
 
-  return [state as number, setInterpolatedState];
+  return [state, setInterpolatedState] as const;
 };
