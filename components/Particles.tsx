@@ -22,8 +22,8 @@ export const Particles = ({ particles }: ParticlesProps) => {
             opacity: particle.opacity,
             left: particle.position.x,
             top: particle.position.y,
-            width: 30,
-            height: 30,
+            width: 35,
+            height: 35,
           }}
           source={assets?.[particle.assetIdx]}
           contentFit="contain"
