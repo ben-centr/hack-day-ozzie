@@ -6,20 +6,27 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   koala: {
     position: "absolute",
-    width: 100,
-    height: 100,
   },
 });
 
 interface KoalaProps {
   position: Position;
   asset: Asset;
+  sizeMultiplier: number;
 }
 
-export const Koala = ({ position, asset }: KoalaProps) => {
+export const Koala = ({ position, asset, sizeMultiplier }: KoalaProps) => {
+  const width = 100 * sizeMultiplier;
+  const height = 100 * sizeMultiplier;
   return (
     <Image
-      style={{ left: position.x, top: position.y, ...styles.koala }}
+      style={{
+        left: position.x,
+        top: position.y,
+        width,
+        height,
+        ...styles.koala,
+      }}
       source={asset}
       contentFit="contain"
     />

@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Game } from "./components/Game";
 import Pedometer from "./components/Pedometer";
 import { useKoala } from "./hooks/useKoala";
+import { useState } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -14,12 +15,24 @@ const styles = StyleSheet.create({
 });
 
 export default function App() {
-  const { asset: koala, nextKoala } = useKoala();
+  const [currentStepCount, setCurrentStepCount] = useState(0);
+  const {
+    asset: koala,
+    nextKoala,
+    sizeMultiplier,
+  } = useKoala({ steps: currentStepCount });
+
+  const updateSteps = (steps: number) => {
+    setCurrentStepCount(steps);
+    if (steps > currentStepCount) {
+      nextKoala();
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Game koalaAsset={koala} />
-      <Pedometer onStep={nextKoala} />
+      <Pedometer steps={currentStepCount} setSteps={updateSteps} />
       <StatusBar style="auto" />
     </View>
   );

@@ -109,7 +109,7 @@ export const Game = ({ koalaAsset }: GameProps) => {
     <GameLoop style={styles.outerContainer} onUpdate={handleGameUpdate}>
       <Background />
       <Particles particles={particles} />
-      <Koala asset={koalaAsset} position={koalaPosition} />
+      <Koala asset={koalaAsset} position={koalaPosition} sizeMultiplier={1} />
     </GameLoop>
   );
 };

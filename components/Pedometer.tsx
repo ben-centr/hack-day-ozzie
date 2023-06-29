@@ -3,7 +3,7 @@ import type {
   PermissionResponse,
   Subscription,
 } from "expo-sensors/build/Pedometer";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 const styles = StyleSheet.create({
@@ -45,15 +45,15 @@ const styles = StyleSheet.create({
 type PedometerAvailable = "true" | "false" | "checking";
 
 interface PedometerComponentProps {
-  onStep: () => void;
+  steps: number;
+  setSteps: Dispatch<SetStateAction<number>>;
 }
 
-const PedometerComponent = ({ onStep }: PedometerComponentProps) => {
+const PedometerComponent = ({ steps, setSteps }: PedometerComponentProps) => {
   const [isPedometerAvailable, setIsPedometerAvailable] =
     useState<PedometerAvailable>("checking");
   const [isPedometerPermissioned, setIsPedometerPermissioned] =
     useState<PermissionResponse | null>(null);
-  const [currentStepCount, setCurrentStepCount] = useState(0);
   const subscription = useRef<Subscription | null>(null);
 
   const subscribe = async () => {
@@ -66,10 +66,7 @@ const PedometerComponent = ({ onStep }: PedometerComponentProps) => {
         setIsPedometerPermissioned(permission);
       }
       subscription.current = Pedometer.watchStepCount((result) => {
-        setCurrentStepCount(result.steps);
-        if (result.steps > currentStepCount) {
-          onStep();
-        }
+        setSteps(result.steps);
       });
     }
   };
@@ -83,9 +80,7 @@ const PedometerComponent = ({ onStep }: PedometerComponentProps) => {
     <View style={styles.container}>
       <View style={styles.stepsContainer}>
         <Text style={styles.stepsText}>You have done</Text>
-        <Text style={styles.stepsValue}>
-          {currentStepCount ?? "not sure how many"}
-        </Text>
+        <Text style={styles.stepsValue}>{steps ?? "not sure how many"}</Text>
         <Text style={styles.stepsText}>steps.</Text>
       </View>
     </View>
