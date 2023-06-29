@@ -9,13 +9,32 @@ interface UseKoalaArgs {
 
 export const useKoala = ({ steps }: UseKoalaArgs) => {
   const [koalaIdx, setKoalaIdx] = useState(0);
-  const [assets, error] = useAssets([
+  const [koala1Assets] = useAssets([
     require("../assets/koala-right.png"),
     require("../assets/koala-left.png"),
   ]);
+  const [koala2Assets] = useAssets([
+    require("../assets/koala-right-2.png"),
+    require("../assets/koala-left-2.png"),
+  ]);
+  const [koala3Assets] = useAssets([
+    require("../assets/koala-right-3.png"),
+    require("../assets/koala-left-3.png"),
+  ]);
+  const [koala4Assets] = useAssets([
+    require("../assets/koala-right-4.png"),
+    require("../assets/koala-left-4.png"),
+  ]);
 
-  if (error) {
-    console.error(error);
+  let assets = koala1Assets;
+  if (steps > 50) {
+    assets = koala2Assets;
+  }
+  if (steps > 100) {
+    assets = koala3Assets;
+  }
+  if (steps > 150) {
+    assets = koala4Assets;
   }
 
   const nextKoala = () => {
