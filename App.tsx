@@ -24,7 +24,6 @@ export default function App() {
   } = useKoala({ steps: currentStepCount });
 
   const updateSteps = (steps: number) => {
-    console.log(`Increasing to ${steps} `);
     setCurrentStepCount(steps);
     nextKoala();
   };

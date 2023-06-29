@@ -34,9 +34,11 @@ interface GameProps {
 }
 
 export const Game = ({ koalaAsset, koalaSize }: GameProps) => {
+  const INITIAL_KOALA_Y = 300 - (koalaSize - 1) * 50;
+
   const [koalaPosition, setKoalaPosition] = useState<Position>({
-    x: 150,
-    y: 250,
+    x: 150 - (koalaSize - 1) * 50,
+    y: INITIAL_KOALA_Y,
   });
 
   const [particles, setParticles] = useState<Array<ParticleType>>([]);
@@ -69,10 +71,10 @@ export const Game = ({ koalaAsset, koalaSize }: GameProps) => {
   useEffect(() => {
     const moveKoala = () => {
       setKoalaPosition((prev) => {
-        if (prev.y === 250) {
-          return { ...prev, y: 260 };
+        if (prev.y === INITIAL_KOALA_Y) {
+          return { ...prev, y: INITIAL_KOALA_Y - 10 };
         }
-        return { ...prev, y: 250 };
+        return { ...prev, y: INITIAL_KOALA_Y };
       });
     };
     const interval = setInterval(moveKoala, 1000);
