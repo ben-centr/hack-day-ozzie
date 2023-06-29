@@ -19,21 +19,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     gap: 20,
+    marginTop: -80,
   },
   stepsText: {
     fontSize: 40,
   },
   stepsValue: {
-    fontSize: 60,
+    fontSize: 100,
     fontWeight: "bold",
     color: "rgb(129 140 248)",
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingTop: 4,
-    paddingBottom: 4,
-    paddingRight: 10,
-    paddingLeft: 10,
     textAlign: "center",
     shadowColor: "blue",
     shadowOffset: { width: 0, height: 0 },
@@ -50,30 +44,28 @@ interface PedometerComponentProps {
 }
 
 const PedometerComponent = ({ steps, setSteps }: PedometerComponentProps) => {
-  
   //const [isPedometerAvailable, setIsPedometerAvailable] =
   //  useState<PedometerAvailable>("checking");
   //const [isPedometerPermissioned, setIsPedometerPermissioned] =
   //  useState<PermissionResponse | null>(null);
-  
+
   const subscription = useRef<Subscription | null>(null);
 
   const subscribe = () => {
-    
     //const isAvailable = await Pedometer.isAvailableAsync();
     //setIsPedometerAvailable(String(isAvailable) as "true" | "false");
 
-   // if (isAvailable) {
-      /*
+    // if (isAvailable) {
+    /*
       if (isPedometerPermissioned === null) {
         const permission = await Pedometer.requestPermissionsAsync();
         setIsPedometerPermissioned(permission);
       }
       */
 
-      subscription.current = Pedometer.watchStepCount((result) => {
-        setSteps(result.steps);
-      });
+    subscription.current = Pedometer.watchStepCount((result) => {
+      setSteps(result.steps);
+    });
     //}
   };
 
@@ -87,7 +79,7 @@ const PedometerComponent = ({ steps, setSteps }: PedometerComponentProps) => {
       <View style={styles.stepsContainer}>
         <Text style={styles.stepsText}>You have done</Text>
         <Text style={styles.stepsValue}>{steps ?? "not sure how many"}</Text>
-        <Text style={styles.stepsText}>steps.</Text>
+        <Text style={styles.stepsText}>steps</Text>
       </View>
     </View>
   );
