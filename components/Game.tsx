@@ -1,12 +1,12 @@
 import { Asset, useAssets } from "expo-asset";
 import { Image } from "expo-image";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   GameLoop,
   GameLoopUpdateEventOptionType,
 } from "react-native-game-engine";
-import { useKoala } from "../hooks/useKoalaSprite";
+import uuid from "react-native-uuid";
 import { Particle as ParticleType, Position } from "../types";
 import { Particles } from "./Particles";
 
@@ -51,7 +51,7 @@ export const Game = ({ koalaAsset }: GameProps) => {
       return [
         ...prev,
         {
-          id: Math.floor(Math.random() * 1000),
+          id: uuid.v4().toString(),
           initializedDate: new Date().getTime(),
           opacity: 1,
           position,

@@ -4,7 +4,7 @@ export interface Position {
 }
 
 export interface Particle {
-  id: number;
+  id: string;
   position: Position;
   opacity: number;
   initializedDate: number;
