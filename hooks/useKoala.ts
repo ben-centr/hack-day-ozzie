@@ -21,9 +21,9 @@ export const useKoala = ({ steps }: UseKoalaArgs) => {
     require("../assets/koala-right-3.png"),
     require("../assets/koala-left-3.png"),
   ]);
-  const [koala4Assets] = useAssets([
-    require("../assets/koala-right-4.png"),
-    require("../assets/koala-left-4.png"),
+  const [koalaLiftingAssets] = useAssets([
+    require("../assets/koala-lifting.gif"),
+    require("../assets/koala-lifting.gif"),
   ]);
 
   let assets = koala1Assets;
@@ -34,7 +34,7 @@ export const useKoala = ({ steps }: UseKoalaArgs) => {
     assets = koala3Assets;
   }
   if (steps > 150) {
-    assets = koala4Assets;
+    assets = koalaLiftingAssets;
   }
 
   const nextKoala = () => {
