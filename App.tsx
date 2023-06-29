@@ -31,7 +31,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Game koalaAsset={koala} />
+      <Game koalaAsset={koala} koalaSize={sizeMultiplier} />
       <Pedometer steps={currentStepCount} setSteps={updateSteps} />
       <StatusBar style="auto" />
     </View>

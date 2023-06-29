@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
 
 interface GameProps {
   koalaAsset: Asset;
+  koalaSize: number;
 }
 
-export const Game = ({ koalaAsset }: GameProps) => {
+export const Game = ({ koalaAsset, koalaSize }: GameProps) => {
   const [koalaPosition, setKoalaPosition] = useState<Position>({
     x: 150,
     y: 250,
@@ -109,7 +110,11 @@ export const Game = ({ koalaAsset }: GameProps) => {
     <GameLoop style={styles.outerContainer} onUpdate={handleGameUpdate}>
       <Background />
       <Particles particles={particles} />
-      <Koala asset={koalaAsset} position={koalaPosition} sizeMultiplier={1} />
+      <Koala
+        asset={koalaAsset}
+        position={koalaPosition}
+        sizeMultiplier={koalaSize}
+      />
     </GameLoop>
   );
 };
