@@ -1,9 +1,12 @@
+import { useAssets } from "expo-asset";
+import { Image } from "expo-image";
 import { useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   GameLoop,
   GameLoopUpdateEventOptionType,
 } from "react-native-game-engine";
+import { useKoala } from "../hooks/useKoalaSprite";
 
 const RADIUS = 25;
 
@@ -20,6 +23,10 @@ const styles = StyleSheet.create({
     height: RADIUS * 2,
     borderRadius: RADIUS * 2,
   },
+  image: {
+    width: 100,
+    height: 100,
+  },
 });
 
 interface Position {
@@ -28,30 +35,30 @@ interface Position {
 }
 
 export const Game = () => {
-  const [playerPosition, setPlayerPosition] = useState<Position>({
+  const koala = useKoala();
+  console.log(koala);
+
+  const [koalaPosition, setKoalaPosition] = useState<Position>({
     x: 50,
     y: 50,
   });
 
   const updateHandler = ({ touches }: GameLoopUpdateEventOptionType) => {
-    let move = touches.find((x) => x.type === "move");
-    if (move) {
-      console.log(move);
-      setPlayerPosition(({ x, y }) => ({
-        x: x + move.delta.pageX,
-        y: y + move.delta.pageY,
-      }));
+    let press = touches.find((x) => x.type === "press");
+    if (press) {
+      setKoalaPosition({
+        x: press.event.pageX,
+        y: press.event.pageY,
+      });
     }
   };
 
   return (
     <GameLoop style={styles.outerContainer} onUpdate={updateHandler}>
-      <View
-        style={{
-          left: playerPosition.x,
-          top: playerPosition.y,
-          ...styles.player,
-        }}
+      <Image
+        style={{ left: koalaPosition.x, top: koalaPosition.y, ...styles.image }}
+        source={koala}
+        contentFit="contain"
       />
     </GameLoop>
   );
